@@ -302,7 +302,7 @@ public class Product implements Serializable {
     }
     DecimalFormat priceFormatter = new DecimalFormat("#0.00");
     String formatedAverage = priceFormatter.format(average);
-    double result = Double.parseDouble(formatedAverage);
+    double result = Double.parseDouble(formatedAverage.replace(",", "."));
     return result;
   }
 
