@@ -367,8 +367,8 @@ public class ProductServlet extends HttpServlet {
         if (name.trim().equals("")) {
             errName = errName.equals("") ? "This field cannot be blank" : errName;
         }
-        if (name.length() > 50) {
-            errName = errName.equals("") ? "Can not be more than 50 characters" : errName;
+        if (name.length() > 100) {
+            errName = errName.equals("") ? "Can not be more than 100 characters" : errName;
         }
 
         //check quantity

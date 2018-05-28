@@ -85,23 +85,19 @@ public class categoryEdit_uploadFile extends HttpServlet {
         String name = request.getParameter("name");
         int id = Integer.parseInt(request.getParameter("id"));
         Models.Category category = categoryFacade.find(id);
-        request.setAttribute("cateId", id);
-        request.setAttribute("cateName", category.getName());
-        request.setAttribute("cateImage", category.getPicture());
-        request.setAttribute("cate", category.getEnabled());
+        
         Models.Category cateByName = categoryFacade.getCateByName(name);
         boolean error = false;
         String errorMess = "";
         if (name.trim().isEmpty()) {
-            category.setName(categoryFacade.find(id).getName());
+            errorMess = errorMess.equals("") ? "Name cannot be blank" : errorMess;
+                error = true;
         }
         if (cateByName != null) {
             if (!category.getName().equalsIgnoreCase(name)) {
                 errorMess = errorMess.equals("") ? "Name Category exist" : errorMess;
                 error = true;
             }
-        } else {
-            category.setName(name);
         }
         if (image == null) {
             category.setPicture(categoryFacade.find(id).getPicture());
@@ -110,11 +106,16 @@ public class categoryEdit_uploadFile extends HttpServlet {
         }
 
         if (error) {
+            request.setAttribute("cateId", id);
+        request.setAttribute("cateName", category.getName());
+        request.setAttribute("cateImage", category.getPicture());
+        request.setAttribute("cate", category.getEnabled());
             request.setAttribute("error", errorMess);
             request.getRequestDispatcher("/admin/category-edit.jsp").forward(request, response);
             return;
         }
         try {
+            category.setName(name);
             categoryFacade.edit(category);
         } catch (Exception e) {
             System.out.println(e.toString());
