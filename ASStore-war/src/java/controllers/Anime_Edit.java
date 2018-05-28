@@ -129,7 +129,6 @@ public class Anime_Edit extends HttpServlet {
             }
             anime.setName(name);
             anime.setDescription(description);
-            anime.setPicture(pic);
             animeFacade.edit(anime);
 
         } catch (EJBException e) {
